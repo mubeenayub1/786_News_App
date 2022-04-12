@@ -36,7 +36,7 @@ const DetailScreen = ({navigation}) => {
           <Icon name="menu" type="feather" size={30} color="transparent" />
         </View>
       </View>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.midContainer}>
           <View style={styles.midView}>
             <Image

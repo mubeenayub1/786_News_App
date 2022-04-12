@@ -16,7 +16,7 @@ import Politics from '../Screens/Health/Politics';
 import Sports from '../Screens/Health/Sports';
 import Science from '../Screens/Health/Science';
 import Technology from '../Screens/Health/Technology';
-// import CustomDrawer from './CustomDrawer';
+import CustomDrawer from '../navigation/CustomDrawer/CustomDrawer';
 import TopStories from '../Screens/Health/TopStories';
 import Trending from '../Screens/Health/Trending';
 import World from '../Screens/Health/World';
@@ -98,24 +98,26 @@ const MyDrawer = () => {
   return (
     <Drawer.Navigator
       initialRouteName="General"
-      // drawerContent={props => <CustomDrawer {...props} />}
+      drawerContent={props => <CustomDrawer {...props} />}
       screenOptions={{
         headerShown: false,
         // drawerActiveBackgroundColor: '#cb0003',
         drawerActiveTintColor: '#cb0003',
-        drawerInactiveTintColor: '#333',
+        drawerInactiveTintColor: 'black',
         drawerLabelStyle: {
           marginLeft: 20,
           fontFamily: 'Roboto-Medium',
-          fontSize: 14,
+          fontSize: 16,
         },
       }}>
       <Drawer.Screen name="General" component={MainScreen} />
       <Drawer.Screen name="Politics" component={Politics} />
       <Drawer.Screen name="Health" component={HealthScreen} />
-      <Drawer.Screen name="Entertainment" component={Entertainment} />
       <Drawer.Screen name="Sports" component={Sports} />
       <Drawer.Screen name="Science" component={Science} />
+      <Drawer.Screen name="Technology" component={Technology} />
+      <Drawer.Screen name="World Wide" component={World} />
+      <Drawer.Screen name="Entertainment" component={Entertainment} />
     </Drawer.Navigator>
   );
 };

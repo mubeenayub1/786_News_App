@@ -5,6 +5,7 @@ import {
   ImageBackground,
   Image,
   TouchableOpacity,
+  SafeAreaView,
 } from 'react-native';
 import {
   DrawerContentScrollView,
@@ -13,72 +14,116 @@ import {
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Theme from '../../Theme/Theme';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const CustomDrawer = props => {
   return (
     <View style={{flex: 1}}>
+      <View
+        style={{
+          // backgroundColor: 'red',
+          height: '20%',
+          width: '100%',
+          borderBottomColor: 'black',
+          borderBottomWidth: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+        <Image
+          source={require('../../assests/image1.jpeg')}
+          style={{height: 100, width: 100, borderRadius: 50}}
+        />
+      </View>
       <DrawerContentScrollView
         {...props}
-        contentContainerStyle={{backgroundColor: '#8200d6'}}>
-        <ImageBackground
-          source={require('../assets/images/menu-bg.jpeg')}
-          style={{padding: 20}}>
-          <Image
-            source={require('../assets/images/user-profile.jpg')}
-            style={{height: 80, width: 80, borderRadius: 40, marginBottom: 10}}
-          />
-          <Text
-            style={{
-              color: '#fff',
-              fontSize: 18,
-              fontFamily: 'Roboto-Medium',
-              marginBottom: 5,
-            }}>
-            John Doe
-          </Text>
-          <View style={{flexDirection: 'row'}}>
+        contentContainerStyle={{
+          // backgroundColor: 'green',
+          height: '100%',
+          width: '100%',
+        }}>
+        <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
+          <TouchableOpacity>
             <Text
               style={{
-                color: '#fff',
-                fontFamily: 'Roboto-Regular',
-                marginRight: 5,
+                fontSize: 20,
+                fontFamily: Theme.fontFamily.bold,
+                color: Theme.colors.primaryColor,
+                padding: '5%',
               }}>
-              280 Coins
+              Categories:
             </Text>
-            <FontAwesome5 name="coins" size={14} color="#fff" />
+          </TouchableOpacity>
+          <View style={{width: '90%', marginHorizontal: '5%'}}>
+            <DrawerItemList {...props} />
           </View>
-        </ImageBackground>
-        <View style={{flex: 1, backgroundColor: '#fff', paddingTop: 10}}>
-          <DrawerItemList {...props} />
-        </View>
+          <TouchableOpacity>
+            <Text
+              style={{
+                fontSize: 20,
+                fontFamily: Theme.fontFamily.bold,
+                color: Theme.colors.primaryColor,
+                padding: '5%',
+              }}>
+              Favourites
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Text
+              style={{
+                fontSize: 20,
+                fontFamily: Theme.fontFamily.bold,
+                color: Theme.colors.primaryColor,
+                padding: '5%',
+              }}>
+              Contact Us
+            </Text>
+          </TouchableOpacity>
+          <View style={{height: 30}}></View>
+        </ScrollView>
       </DrawerContentScrollView>
-      <View style={{padding: 20, borderTopWidth: 1, borderTopColor: '#ccc'}}>
-        <TouchableOpacity onPress={() => {}} style={{paddingVertical: 15}}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Ionicons name="share-social-outline" size={22} />
-            <Text
-              style={{
-                fontSize: 15,
-                fontFamily: 'Roboto-Medium',
-                marginLeft: 5,
-              }}>
-              Tell a Friend
-            </Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => {}} style={{paddingVertical: 15}}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Ionicons name="exit-outline" size={22} />
-            <Text
-              style={{
-                fontSize: 15,
-                fontFamily: 'Roboto-Medium',
-                marginLeft: 5,
-              }}>
-              Sign Out
-            </Text>
-          </View>
-        </TouchableOpacity>
+      <View
+        style={{
+          borderTopWidth: 1,
+          borderTopColor: 'black',
+          height: '15%',
+        }}>
+        <Text
+          style={{
+            fontSize: 18,
+            fontFamily: Theme.fontFamily.regular,
+            color: 'black',
+            paddingHorizontal: 10,
+            marginTop: 10,
+          }}>
+          Also Avaiable on
+        </Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            marginHorizontal: '5%',
+            justifyContent: 'space-between',
+            width: '65%',
+          }}>
+          <TouchableOpacity onPress={() => {}} style={{paddingVertical: 15}}>
+            <Image
+              source={require('../../assests/youtube.png')}
+              style={{height: 40, width: 60, borderRadius: 10}}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => {}} style={{paddingVertical: 15}}>
+            <Image
+              source={require('../../assests/Facebook.jpg')}
+              style={{height: 40, width: 40, borderRadius: 20}}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => {}} style={{paddingVertical: 15}}>
+            <Image
+              source={require('../../assests/web1.png')}
+              style={{height: 40, width: 40, borderRadius: 20}}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
