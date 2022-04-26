@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -8,8 +8,10 @@ import {
   StatusBar,
   TouchableOpacity,
   ImageBackground,
+  FlatList,
 } from 'react-native';
-
+import axios from 'axios';
+import moment from 'moment';
 import {Icon} from 'react-native-elements';
 import styles from './styles';
 
@@ -18,6 +20,67 @@ const MainScreen = ({navigation}) => {
   const fillIcon = () => {
     setShow(!show);
   };
+  const [trending, Settrending] = useState([]);
+  const [date, setDate] = useState('');
+  const [story, setStory] = useState([]);
+  useEffect(() => {
+    fechApi();
+    TopStories();
+  }, []);
+
+  const fechApi = async () => {
+    try {
+      // var axios = require('axios');
+      var config = {
+        method: 'get',
+        url: 'https://786news.com.pk/wp-json/wp/v2/posts?categories=3',
+        headers: {},
+      };
+
+      let response = await axios(config);
+      if (response) {
+        // console.log(response);
+        console.log('success');
+        // console.log(response.data[0]);
+        Settrending(response.data);
+      }
+
+      // axios(config)
+      //   .then(function (response) {
+      //     console.log(JSON.stringify(response.data));
+      //     Settrending(response);
+      //   })
+      //   .catch(function (error) {
+      //     console.log(error);
+      //   });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const TopStories = () => {
+    var config = {
+      method: 'get',
+      url: 'http://786news.com.pk/wp-json/wp/v2/posts?categories=7318',
+      headers: {},
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+        setStory(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  // const datesetting = setDate(
+  //   moment(trending.date).format('MMMM Do YYYY, h:mm:ss a'),
+  // );
+
+  // const regex = trending.content.rendered;
+  // const result = trending.content.rendered.replace(regex, '');
+
   return (
     <View style={styles.maincontainer}>
       {/* header section */}
@@ -110,485 +173,149 @@ const MainScreen = ({navigation}) => {
       </View>
 
       {/* Horizontal Scroll section */}
-      <ScrollView
+      <View style={styles.midContainer}>
+        <View style={styles.midView}>
+          <Text style={styles.midText}>Top Stories</Text>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('TopStories');
+            }}
+            style={styles.viewAllContainer}>
+            <Text style={styles.endText1}>View All</Text>
+          </TouchableOpacity>
+        </View>
+        <FlatList
+          data={story}
+          horizontal
+          pagingEnabled={true}
+          renderItem={({item}) => {
+            return (
+              <TouchableOpacity
+                style={styles.horizontalScrollComponent}
+                onPress={() => {
+                  navigation.navigate('DetailScreen');
+                }}>
+                <ImageBackground
+                  source={{uri: item.jetpack_featured_media_urls}}
+                  style={styles.horizontalComponentImage}>
+                  <View style={styles.horizontalComponentIcon}>
+                    <Icon
+                      name={show ? 'bookmark' : 'bookmark-outline'}
+                      type="ionicons"
+                      size={28}
+                      color="white"
+                      style={{}}
+                      onPress={() => {
+                        fillIcon();
+                      }}
+                    />
+                  </View>
+                </ImageBackground>
+              </TouchableOpacity>
+            );
+          }}
+        />
+      </View>
+      <View style={styles.endheader}>
+        <Text style={styles.endText}>Trending</Text>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('Trending');
+          }}
+          style={styles.viewAllContainer}>
+          <Text style={styles.endText1}>View All</Text>
+        </TouchableOpacity>
+      </View>
+      <FlatList
         showsVerticalScrollIndicator={false}
+        // ListHeaderComponent={() => {
+        //   return (
+        //     <>
+        //       <View style={styles.midContainer}>
+        //         <View style={styles.midView}>
+        //           <Text style={styles.midText}>Top Stories</Text>
+        //           <TouchableOpacity
+        //             onPress={() => {
+        //               navigation.navigate('TopStories');
+        //             }}
+        //             style={styles.viewAllContainer}>
+        //             <Text style={styles.endText1}>View All</Text>
+        //           </TouchableOpacity>
+        //         </View>
+        //         <FlatList
+        //           data={story}
+        //           renderItem={({item}) => {
+        //             return (
+        //               <TouchableOpacity
+        //                 style={styles.horizontalScrollComponent}
+        //                 onPress={() => {
+        //                   navigation.navigate('DetailScreen');
+        //                 }}>
+        //                 <ImageBackground
+        //                   source={{uri: item.jetpack_featured_media_urls}}
+        //                   style={styles.horizontalComponentImage}>
+        //                   <View style={styles.horizontalComponentIcon}>
+        //                     <Icon
+        //                       name={show ? 'bookmark' : 'bookmark-outline'}
+        //                       type="ionicons"
+        //                       size={28}
+        //                       color="white"
+        //                       style={{}}
+        //                       onPress={() => {
+        //                         fillIcon();
+        //                       }}
+        //                     />
+        //                   </View>
+        //                 </ImageBackground>
+        //               </TouchableOpacity>
+        //             );
+        //           }}
+        //         />
+        //       </View>
+        //       <View style={styles.endheader}>
+        //         <Text style={styles.endText}>Trending</Text>
+        //         <TouchableOpacity
+        //           onPress={() => {
+        //             navigation.navigate('Trending');
+        //           }}
+        //           style={styles.viewAllContainer}>
+        //           <Text style={styles.endText1}>View All</Text>
+        //         </TouchableOpacity>
+        //       </View>
+        //     </>
+        //   );
+        // }}
+        data={trending}
         nestedScrollEnabled={true}
-        scrollEventThrottle={13}>
-        <View style={styles.midContainer}>
-          <View style={styles.midView}>
-            <Text style={styles.midText}>Top Stories</Text>
+        renderItem={({item}) => {
+          return (
             <TouchableOpacity
+              style={styles.VerticalScrollComponent}
               onPress={() => {
-                navigation.navigate('TopStories');
-              }}
-              style={{
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: 80,
-                backgroundColor: 'white',
-                height: 30,
-                borderRadius: 25,
+                navigation.navigate('DetailScreen', {
+                  item: item,
+                });
               }}>
-              <Text style={styles.endText1}>View All</Text>
+              <View style={styles.cardContainer}>
+                <View style={styles.cardMainTextContainer}>
+                  <Text style={styles.cardMainText}>{item.title.rendered}</Text>
+                </View>
+                <Text style={styles.scrollText}>{item.content.rendered}</Text>
+                <View style={styles.cardTimeContainer}>
+                  <Text style={styles.scrollText1}>{item.date}</Text>
+                </View>
+              </View>
+              <Image
+                style={styles.scrollImage}
+                source={{uri: item.jetpack_featured_media_url}}
+              />
             </TouchableOpacity>
-          </View>
-          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-            <TouchableOpacity
-              style={styles.midScrollCom}
-              onPress={() => {
-                navigation.navigate('DetailScreen');
-              }}>
-              <ImageBackground
-                source={require('../../assests/image7.jpg')}
-                style={{
-                  width: 240,
-                  height: 160,
-                  borderRadius: 5,
-                  overflow: 'hidden',
-                }}>
-                <View
-                  style={{
-                    height: 50,
-                    width: '95%',
-                    flexDirection: 'row',
-                    justifyContent: 'flex-end',
-                    marginTop: 5,
-                  }}>
-                  <Icon
-                    name={show ? 'bookmark' : 'bookmark-outline'}
-                    type="ionicons"
-                    size={28}
-                    color="white"
-                    style={{}}
-                    onPress={() => {
-                      fillIcon();
-                    }}
-                  />
-                  {/* <Icon
-                  name="share"
-                  type="entypo"
-                  size={24}
-                  color="white"
-                  onPress={() => {}}
-                /> */}
-                </View>
-              </ImageBackground>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.midScrollCom}
-              onPress={() => {
-                navigation.navigate('DetailScreen');
-              }}>
-              <ImageBackground
-                source={require('../../assests/image3.jpg')}
-                imageStyle={{borderRadius: 5}}
-                style={{width: 240, height: 160, borderRadius: 5}}>
-                <View
-                  style={{
-                    height: 50,
-                    width: '95%',
-                    flexDirection: 'row',
-                    justifyContent: 'flex-end',
-                    marginTop: 5,
-                  }}>
-                  <Icon
-                    name={show ? 'bookmark' : 'bookmark-outline'}
-                    type="ionicons"
-                    size={28}
-                    color="white"
-                    style={{}}
-                    onPress={() => {
-                      fillIcon();
-                    }}
-                  />
-                  {/* <Icon
-              name="share"
-              type="entypo"
-              size={24}
-              color="white"
-              onPress={() => {}}
-            /> */}
-                </View>
-              </ImageBackground>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.midScrollCom}
-              onPress={() => {
-                navigation.navigate('DetailScreen');
-              }}>
-              <ImageBackground
-                source={require('../../assests/image4.jpg')}
-                imageStyle={{borderRadius: 5}}
-                style={{width: 240, height: 160, borderRadius: 5}}>
-                <View
-                  style={{
-                    height: 50,
-                    width: '95%',
-                    flexDirection: 'row',
-                    justifyContent: 'flex-end',
-                    marginTop: 5,
-                  }}>
-                  <Icon
-                    name={show ? 'bookmark' : 'bookmark-outline'}
-                    type="ionicons"
-                    size={28}
-                    color="white"
-                    style={{}}
-                    onPress={() => {
-                      fillIcon();
-                    }}
-                  />
-                </View>
-              </ImageBackground>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.midScrollCom}
-              onPress={() => {
-                navigation.navigate('DetailScreen');
-              }}>
-              <ImageBackground
-                source={require('../../assests/image5.jpg')}
-                imageStyle={{borderRadius: 5}}
-                style={{width: 240, height: 160, borderRadius: 5}}>
-                <View
-                  style={{
-                    height: 50,
-                    width: '95%',
-                    flexDirection: 'row',
-                    justifyContent: 'flex-end',
-                    marginTop: 5,
-                  }}>
-                  <Icon
-                    name={show ? 'bookmark' : 'bookmark-outline'}
-                    type="ionicons"
-                    size={28}
-                    color="white"
-                    style={{}}
-                    onPress={() => {
-                      fillIcon();
-                    }}
-                  />
-                </View>
-              </ImageBackground>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.midScrollCom}
-              onPress={() => {
-                navigation.navigate('DetailScreen');
-              }}>
-              <ImageBackground
-                source={require('../../assests/image6.jpg')}
-                imageStyle={{borderRadius: 5}}
-                style={{
-                  width: 240,
-                  height: 160,
-                  borderRadius: 5,
-                }}>
-                <View
-                  style={{
-                    height: 50,
-                    width: '95%',
-                    flexDirection: 'row',
-                    justifyContent: 'flex-end',
-                    marginTop: 5,
-                  }}>
-                  <Icon
-                    name={show ? 'bookmark' : 'bookmark-outline'}
-                    type="ionicons"
-                    size={28}
-                    color="white"
-                    style={{}}
-                    onPress={() => {
-                      fillIcon();
-                    }}
-                  />
-                </View>
-              </ImageBackground>
-            </TouchableOpacity>
-            <View style={{height: 50, width: 20}}></View>
-          </ScrollView>
-        </View>
-
-        {/* vertical Scroll section */}
-        <View style={styles.endContainer}>
-          <View style={styles.endheader}>
-            <Text style={styles.endText}>Trending</Text>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('Trending');
-              }}
-              style={{
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: 80,
-                backgroundColor: 'white',
-                height: 30,
-                borderRadius: 25,
-              }}>
-              <Text style={styles.endText1}>View All</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={{height: '100%', width: '100%'}}>
-            <ScrollView
-              style={{flex: 1}}
-              showsVerticalScrollIndicator={false}
-              nestedScrollEnabled={true}>
-              <TouchableOpacity
-                style={styles.scrollcom}
-                onPress={() => {
-                  navigation.navigate('DetailScreen');
-                }}>
-                <View style={styles.cardContainer}>
-                  <View style={styles.cardMainTextContainer}>
-                    <Text style={styles.cardMainText}>Politics</Text>
-                  </View>
-                  <Text style={styles.scrollText}>
-                    lorem ipsum generator for future-of-news. lorem ipsum .news.
-                  </Text>
-                  <View style={styles.cardTimeContainer}>
-                    <Text style={styles.scrollText1}>4 hour ago</Text>
-                  </View>
-                </View>
-                <Image
-                  style={styles.scrollImage}
-                  source={require('../../assests/image8.jpg')}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.scrollcom}
-                onPress={() => {
-                  navigation.navigate('DetailScreen');
-                }}>
-                <View
-                  style={{
-                    width: '60%',
-                    paddingHorizontal: '1%',
-                    height: '100%',
-                  }}>
-                  <View
-                    style={{
-                      height: '30%',
-                      marginHorizontal: '2.5%',
-                      justifyContent: 'center',
-                    }}>
-                    <Text
-                      style={{
-                        color: '#cb0003',
-                        fontFamily: 'Roboto-Medium',
-                        fontSize: 19,
-                      }}>
-                      Sports
-                    </Text>
-                  </View>
-                  <Text style={styles.scrollText}>
-                    lorem ipsum generator for future-of-news. lorem ipsum .news.
-                  </Text>
-                  <View
-                    style={{
-                      height: '20%',
-                      width: '100%',
-                      // justifyContent: 'space-evenly',
-                      alignItems: 'center',
-                      paddingBottom: '5%',
-                      flexDirection: 'row',
-                    }}>
-                    <Text style={styles.scrollText1}>4 hour ago</Text>
-                  </View>
-                </View>
-                <Image
-                  style={styles.scrollImage}
-                  source={require('../../assests/image10.jpg')}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.scrollcom}
-                onPress={() => {
-                  navigation.navigate('DetailScreen');
-                }}>
-                <View
-                  style={{
-                    width: '60%',
-                    paddingHorizontal: '1%',
-                    height: '100%',
-                  }}>
-                  <View
-                    style={{
-                      height: '30%',
-                      marginHorizontal: '2.5%',
-                      justifyContent: 'center',
-                    }}>
-                    <Text
-                      style={{
-                        color: '#cb0003',
-                        fontFamily: 'Roboto-Medium',
-                        fontSize: 19,
-                      }}>
-                      Medical
-                    </Text>
-                  </View>
-                  <Text style={styles.scrollText}>
-                    lorem ipsum generator for future-of-news. lorem ipsum .news.
-                  </Text>
-                  <View
-                    style={{
-                      height: '20%',
-                      width: '100%',
-                      // justifyContent: 'space-evenly',
-                      alignItems: 'center',
-                      paddingBottom: '5%',
-                      flexDirection: 'row',
-                    }}>
-                    <Text style={styles.scrollText1}>4 hour ago</Text>
-                  </View>
-                </View>
-                <Image
-                  style={styles.scrollImage}
-                  source={require('../../assests/image7.jpg')}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.scrollcom}
-                onPress={() => {
-                  navigation.navigate('DetailScreen');
-                }}>
-                <View
-                  style={{
-                    width: '60%',
-                    paddingHorizontal: '1%',
-                    height: '100%',
-                  }}>
-                  <View
-                    style={{
-                      height: '30%',
-                      marginHorizontal: '2.5%',
-                      justifyContent: 'center',
-                    }}>
-                    <Text
-                      style={{
-                        color: '#cb0003',
-                        fontFamily: 'Roboto-Medium',
-                        fontSize: 19,
-                      }}>
-                      World Wide
-                    </Text>
-                  </View>
-                  <Text style={styles.scrollText}>
-                    lorem ipsum generator for future-of-news. lorem ipsum .news.
-                  </Text>
-                  <View
-                    style={{
-                      height: '20%',
-                      width: '100%',
-                      // justifyContent: 'space-evenly',
-                      alignItems: 'center',
-                      paddingBottom: '5%',
-                      flexDirection: 'row',
-                    }}>
-                    <Text style={styles.scrollText1}>4 hour ago</Text>
-                  </View>
-                </View>
-                <Image
-                  style={styles.scrollImage}
-                  source={require('../../assests/image6.jpg')}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.scrollcom}
-                onPress={() => {
-                  navigation.navigate('DetailScreen');
-                }}>
-                <View
-                  style={{
-                    width: '60%',
-                    paddingHorizontal: '1%',
-                    height: '100%',
-                  }}>
-                  <View
-                    style={{
-                      height: '30%',
-                      marginHorizontal: '2.5%',
-                      justifyContent: 'center',
-                    }}>
-                    <Text
-                      style={{
-                        color: '#cb0003',
-                        fontFamily: 'Roboto-Medium',
-                        fontSize: 19,
-                      }}>
-                      Science
-                    </Text>
-                  </View>
-                  <Text style={styles.scrollText}>
-                    lorem ipsum generator for future-of-news. lorem ipsum .news.
-                  </Text>
-                  <View
-                    style={{
-                      height: '20%',
-                      width: '100%',
-                      // justifyContent: 'space-evenly',
-                      alignItems: 'center',
-                      paddingBottom: '5%',
-                      flexDirection: 'row',
-                    }}>
-                    <Text style={styles.scrollText1}>4 hour ago</Text>
-                  </View>
-                </View>
-                <Image
-                  style={styles.scrollImage}
-                  source={require('../../assests/image5.jpg')}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.scrollcom}
-                onPress={() => {
-                  navigation.navigate('DetailScreen');
-                }}>
-                <View
-                  style={{
-                    width: '60%',
-                    paddingHorizontal: '1%',
-                    height: '100%',
-                  }}>
-                  <View
-                    style={{
-                      height: '30%',
-                      marginHorizontal: '2.5%',
-                      justifyContent: 'center',
-                    }}>
-                    <Text
-                      style={{
-                        color: '#cb0003',
-                        fontFamily: 'Jameel Noori Nastaleeq Regular',
-                        fontSize: 19,
-                      }}>
-                      سیاست
-                    </Text>
-                  </View>
-                  <Text style={styles.scrollText}>
-                    lorem ipsum generator for future-of-news. lorem ipsum .news.
-                  </Text>
-                  <View
-                    style={{
-                      height: '20%',
-                      width: '100%',
-                      // justifyContent: 'space-evenly',
-                      alignItems: 'center',
-                      paddingBottom: '5%',
-                      flexDirection: 'row',
-                    }}>
-                    <Text style={styles.scrollText1}>4 hour ago</Text>
-                  </View>
-                </View>
-                <Image
-                  style={styles.scrollImage}
-                  source={require('../../assests/image4.jpg')}
-                />
-              </TouchableOpacity>
-            </ScrollView>
-          </View>
-        </View>
-        <View style={{height: 100}}></View>
-      </ScrollView>
+          );
+        }}
+        contentContainerStyle={{
+          paddingBottom: 20,
+        }}
+      />
     </View>
   );
 };

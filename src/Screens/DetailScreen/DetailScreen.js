@@ -13,14 +13,17 @@ import {Icon} from 'react-native-elements';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import styles from './styles';
 
-const DetailScreen = ({navigation}) => {
+const DetailScreen = ({navigation, route}) => {
   const [show, setShow] = useState(false);
+  const {item} = route.params;
   const fillIcon = () => {
     setShow(!show);
   };
+  // const regex = item.content.rendered;
+  // const result = item.content.rendered.Replace(regex, '');
   return (
     <View style={styles.maincontainer}>
-      <StatusBar barStyle="auto" />
+      <StatusBar backgroundColor={'red'} barStyle="light-content" />
       <View style={styles.headerConatiner}>
         <View style={styles.header}>
           <Icon
@@ -37,48 +40,24 @@ const DetailScreen = ({navigation}) => {
         </View>
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.midContainer}>
-          <View style={styles.midView}>
+        <View style={styles.detailImageContainer}>
+          <View style={styles.imageContainer}>
             <Image
-              source={require('../../assests/fb1.jpeg')}
-              style={styles.midPhoto}
+              source={{uri: item.jetpack_featured_media_url}}
+              style={styles.photo}
             />
           </View>
-          <View
-            style={{
-              width: '90%',
-              // backgroundColor: 'grey',
-              height: '30%',
-              justifyContent: 'space-between',
-              paddingVertical: 5,
-            }}>
-            <Text style={styles.midText}>
-              A lorem ipsum generator for future-of-news.
-            </Text>
-            <View
-              style={{
-                flexDirection: 'row',
-                height: '25%',
-                alignItems: 'center',
-              }}>
-              <View style={{width: '75%'}}>
-                <Text style={{fontFamily: 'Roboto-Regular', fontSize: 12}}>
-                  March 23,2022
-                </Text>
+          <View style={styles.textContainer}>
+            <Text style={styles.headingText}>{item.title.rendered}</Text>
+            <View style={styles.timeContainer}>
+              <View style={{width: '85%'}}>
+                <Text style={styles.time}> {item.date_gmt}</Text>
               </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  height: 50,
-                  width: '20%',
-                  alignItems: 'center',
-                  // backgroundColor: 'red',
-                }}>
+              <View style={styles.iconContainer}>
                 <Icon
                   name={show ? 'bookmark' : 'bookmark-outline'}
                   type="ionicons"
-                  size={28}
+                  size={20}
                   color="black"
                   style={{}}
                   onPress={() => {
@@ -88,7 +67,7 @@ const DetailScreen = ({navigation}) => {
                 <Icon
                   name="share"
                   type="entypo"
-                  size={24}
+                  size={20}
                   color="black"
                   onPress={() => {}}
                 />
@@ -96,27 +75,11 @@ const DetailScreen = ({navigation}) => {
             </View>
           </View>
         </View>
-        <View
-          style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: (height / 100) * 25,
-            // backgroundColor: 'white',
-          }}>
-          <View style={{width: '90%', height: '90%'}}>
-            <Text style={{color: 'black'}}>
-              Lorum ipsum is the traditional Latin placeholder text, used when a
-              designer needs a chunk of text for dummying up a layout. Journo
-              Ipsum is like that, only using some of the most common
-              catchphrases, buzzwords.Lorum ipsum is the traditional Latin
-              placeholder text, used when a designer needs a chunk of text for
-              dummying up a layout. Journo Ipsum is like that, only using some
-              of the most common catchphrases, buzzwords.
-            </Text>
-          </View>
-        </View>
+        <ScrollView contentContainerStyle={styles.detailTextContainer}>
+          <Text style={styles.detailText}>{item.content.rendered}</Text>
+        </ScrollView>
 
-        <View style={styles.endContainer}>
+        {/* <View style={styles.endContainer}>
           <View style={styles.endheader}>
             <Text style={styles.endText}>Related News</Text>
           </View>
@@ -268,8 +231,8 @@ const DetailScreen = ({navigation}) => {
               </TouchableOpacity>
             </View>
           </View>
-        </View>
-        <View style={{height: 300}}></View>
+        </View> */}
+        <View style={{height: 100}}></View>
       </ScrollView>
     </View>
   );

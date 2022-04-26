@@ -1,15 +1,18 @@
 import React from 'react';
 import {StyleSheet, Dimensions} from 'react-native';
+import {moderateScale} from '../../Theme/Dimensions';
+import Theme from '../../Theme/Theme';
 const {height, width} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   maincontainer: {
     flex: 1,
+    backgroundColor: Theme.colors.whiteColor,
   },
   headerConatiner: {
     height: (height / 100) * 8,
     width: '100%',
-    backgroundColor: '#cb0003',
+    backgroundColor: Theme.colors.primaryColor,
     alignItems: 'center',
   },
   header: {
@@ -28,7 +31,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
 
-  midContainer: {
+  detailImageContainer: {
     height: (height / 100) * 42,
     width: '100%',
     // backgroundColor: 'white',
@@ -36,22 +39,63 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: 'grey',
   },
-  midView: {
+  imageContainer: {
     width: '100%',
     height: '70%',
+    overflow: 'scroll',
     // backgroundColor: 'blue',
   },
-  midPhoto: {
+  photo: {
     width: '100%',
     height: '100%',
+    resizeMode: 'contain',
   },
-  midText: {
-    color: '#221f1f',
-    fontSize: 18,
+  textContainer: {
+    width: '95%',
+    // backgroundColor: 'grey',
+    height: '30%',
+    justifyContent: 'space-between',
+    paddingVertical: 5,
+  },
+  detailTextContainer: {
+    // alignItems: 'center',
+    // justifyContent: 'center',
+    // height: moderateScale(300),
+    paddingHorizontal: moderateScale(10),
+    // height: (height / 100) * 25,
+    // backgroundColor: 'white',
+  },
+  detailText: {
+    color: Theme.colors.secondaryColor,
+    fontFamily: Theme.fontFamily.urdu,
+    fontSize: Theme.fontSizes.xxmedium,
+  },
+  headingText: {
+    color: Theme.colors.primaryColor,
+    fontSize: Theme.fontSizes.xxmedium,
     height: '70%',
     width: '100%',
-    fontFamily: 'Roboto-Bold',
-    textTransform: 'uppercase',
+    fontFamily: Theme.fontFamily.urdu,
+    // textTransform: 'uppercase',
+  },
+  timeContainer: {
+    flexDirection: 'row',
+    height: '25%',
+    alignItems: 'flex-end',
+  },
+  time: {
+    fontFamily: Theme.fontFamily.regular,
+    fontSize: Theme.fontSizes.small,
+    color: Theme.colors.grayColor,
+  },
+  iconContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    height: 50,
+    width: '15%',
+    alignItems: 'flex-end',
+    // alignItems: 'center',
+    // backgroundColor: 'red',
   },
   midScrollCom: {
     height: '100%',
