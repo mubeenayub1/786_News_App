@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     fontFamily: Theme.fontFamily.medium,
   },
   midContainer: {
-    height: moderateScale(250),
+    height: moderateScale(300),
     width: '100%',
     flexDirection: 'column',
     // backgroundColor: 'red',
@@ -109,14 +109,16 @@ const styles = StyleSheet.create({
     height: moderateScale(160),
     width: moderateScale(240),
     marginHorizontal: moderateScale(20),
-    backgroundColor: 'blue',
+    // backgroundColor: 'blue',
     borderRadius: moderateScale(5),
+    // elevation: 5,
+    // overflow: 'hidden',
   },
-  horizontalComponentImage: {
-    width: 240,
-    height: 160,
+  horizontalImage: {
+    width: moderateScale(250),
+    height: moderateScale(200),
     borderRadius: 5,
-    overflow: 'hidden',
+    // resizeMode: 'contain',
   },
   horizontalComponentIcon: {
     height: 50,

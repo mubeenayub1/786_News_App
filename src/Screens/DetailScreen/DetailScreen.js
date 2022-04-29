@@ -15,6 +15,7 @@ import styles from './styles';
 
 const DetailScreen = ({navigation, route}) => {
   const [show, setShow] = useState(false);
+  // const {item} = route.params;
   const {item} = route.params;
   const fillIcon = () => {
     setShow(!show);

@@ -1,8 +1,41 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import styles from './styles';
 
 const Card = () => {
+  const [story, setStory] = useState([]);
+  useEffect(() => {
+    TopStory();
+  }, []);
+  const TopStory = async () => {
+    try {
+      // var axios = require('axios');
+      var config = {
+        method: 'get',
+        url: 'https://786news.com.pk/wp-json/wp/v2/posts?categories=3',
+        headers: {},
+      };
+
+      let response = await axios(config);
+      if (response) {
+        // console.log(response);
+        console.log('success');
+        // console.log(response.data[0]);
+        setStory(response.data);
+      }
+
+      // axios(config)
+      //   .then(function (response) {
+      //     console.log(JSON.stringify(response.data));
+      //     Settrending(response);
+      //   })
+      //   .catch(function (error) {
+      //     console.log(error);
+      //   });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <TouchableOpacity
       style={styles.scrollcom}

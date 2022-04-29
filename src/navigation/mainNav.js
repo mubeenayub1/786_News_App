@@ -10,16 +10,20 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Splash from '../Screens/Splash/Splash';
 import DetailScreen from '../Screens/DetailScreen/DetailScreen';
 import MainScreen from '../Screens/MainScreen/MainScreen';
-import HealthScreen from '../Screens/Health/HealthScreen';
-import Entertainment from '../Screens/Health/Entertainment';
-import Politics from '../Screens/Health/Politics';
-import Sports from '../Screens/Health/Sports';
-import Science from '../Screens/Health/Science';
-import Technology from '../Screens/Health/Technology';
+import National from '../Screens/OtherScreens/National';
+import Business from '../Screens/OtherScreens/Business';
+import Religion from '../Screens/OtherScreens/Religion';
+import Sports from '../Screens/OtherScreens/Sports';
+import Education from '../Screens/OtherScreens/Education';
+import Health from '../Screens/OtherScreens/Health';
 import CustomDrawer from '../navigation/CustomDrawer/CustomDrawer';
-import TopStories from '../Screens/Health/TopStories';
-import Trending from '../Screens/Health/Trending';
-import World from '../Screens/Health/World';
+import Science from '../Screens/OtherScreens/Science';
+import ShowBiz from '../Screens/OtherScreens/ShowBiz';
+import Season from '../Screens/OtherScreens/Season';
+import Amazing from '../Screens/OtherScreens/Amazing';
+import Cricket from '../Screens/OtherScreens/Cricket';
+import InterNational from '../Screens/OtherScreens/InterNational';
+import Food from '../Screens/OtherScreens/Food';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -45,23 +49,28 @@ const MainNav = () => {
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="HealthScreen"
-          component={HealthScreen}
+          name="National"
+          component={National}
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="TopStories"
-          component={TopStories}
+          name="Health"
+          component={Health}
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="Trending"
-          component={Trending}
+          name="Religion"
+          component={Religion}
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="Politics"
-          component={Politics}
+          name="Cricket"
+          component={Cricket}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="ShowBiz"
+          component={ShowBiz}
           options={{headerShown: false}}
         />
         <Stack.Screen
@@ -70,23 +79,33 @@ const MainNav = () => {
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="Science"
-          component={Science}
+          name="Education"
+          component={Education}
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="Entertainment"
-          component={Entertainment}
+          name="Business"
+          component={Business}
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="Technology"
-          component={Technology}
+          name="Amazing"
+          component={Amazing}
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="World"
-          component={World}
+          name="InterNational"
+          component={InterNational}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Season"
+          component={Season}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Food"
+          component={Food}
           options={{headerShown: false}}
         />
       </Stack.Navigator>
@@ -107,17 +126,23 @@ const MyDrawer = () => {
         drawerLabelStyle: {
           marginLeft: 20,
           fontFamily: 'Roboto-Medium',
-          fontSize: 16,
+          fontSize: 14,
         },
       }}>
       <Drawer.Screen name="General" component={MainScreen} />
-      <Drawer.Screen name="Politics" component={Politics} />
-      <Drawer.Screen name="Health" component={HealthScreen} />
+      <Drawer.Screen name="Amazing & Wierd" component={Amazing} />
+      <Drawer.Screen name="Bussiness" component={Business} />
+      <Drawer.Screen name="Cricket" component={Cricket} />
+      <Drawer.Screen name="Education" component={Education} />
+      <Drawer.Screen name="Food & Recipes" component={Food} />
+      <Drawer.Screen name="Health" component={Health} />
+      <Drawer.Screen name="International" component={InterNational} />
+      <Drawer.Screen name="National" component={National} />
+      <Drawer.Screen name="Religion" component={Religion} />
+      <Drawer.Screen name="Science & Technology" component={Science} />
+      <Drawer.Screen name="Season" component={Season} />
+      <Drawer.Screen name="Showbiz" component={ShowBiz} />
       <Drawer.Screen name="Sports" component={Sports} />
-      <Drawer.Screen name="Science" component={Science} />
-      <Drawer.Screen name="Technology" component={Technology} />
-      <Drawer.Screen name="World Wide" component={World} />
-      <Drawer.Screen name="Entertainment" component={Entertainment} />
     </Drawer.Navigator>
   );
 };

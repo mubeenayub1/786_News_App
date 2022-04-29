@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   ImageBackground,
   FlatList,
+  Pressable,
 } from 'react-native';
 import axios from 'axios';
 import moment from 'moment';
@@ -23,9 +24,10 @@ const MainScreen = ({navigation}) => {
   const [trending, Settrending] = useState([]);
   const [date, setDate] = useState('');
   const [story, setStory] = useState([]);
+
   useEffect(() => {
     fechApi();
-    TopStories();
+    // TopStories();
   }, []);
 
   const fechApi = async () => {
@@ -44,36 +46,29 @@ const MainScreen = ({navigation}) => {
         // console.log(response.data[0]);
         Settrending(response.data);
       }
-
-      // axios(config)
-      //   .then(function (response) {
-      //     console.log(JSON.stringify(response.data));
-      //     Settrending(response);
-      //   })
-      //   .catch(function (error) {
-      //     console.log(error);
-      //   });
     } catch (error) {
       console.log(error);
     }
   };
-  const TopStories = () => {
-    var config = {
-      method: 'get',
-      url: 'http://786news.com.pk/wp-json/wp/v2/posts?categories=7318',
-      headers: {},
-    };
+  // const TopStories = async => {
+  //   try {
+  //     var config = {
+  //       method: 'get',
+  //       url: 'http://786news.com.pk/wp-json/wp/v2/posts?categories=7318',
+  //       headers: {},
+  //     };
 
-    axios(config)
-      .then(function (response) {
-        console.log(JSON.stringify(response.data));
-        setStory(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
-
+  //     let response = await axios(config);
+  //     if (response) {
+  //       // console.log(response);
+  //       console.log('success');
+  //       // console.log(response.data[0]);
+  //       setStory(response.data);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
   // const datesetting = setDate(
   //   moment(trending.date).format('MMMM Do YYYY, h:mm:ss a'),
   // );
@@ -173,8 +168,8 @@ const MainScreen = ({navigation}) => {
       </View>
 
       {/* Horizontal Scroll section */}
-      <View style={styles.midContainer}>
-        <View style={styles.midView}>
+      {/* <View style={styles.midContainer}>
+        {/* <View style={styles.midView}>
           <Text style={styles.midText}>Top Stories</Text>
           <TouchableOpacity
             onPress={() => {
@@ -214,9 +209,9 @@ const MainScreen = ({navigation}) => {
               </TouchableOpacity>
             );
           }}
-        />
-      </View>
-      <View style={styles.endheader}>
+        /> */}
+      {/* </View>  */}
+      {/* <View style={styles.endheader}>
         <Text style={styles.endText}>Trending</Text>
         <TouchableOpacity
           onPress={() => {
@@ -225,7 +220,7 @@ const MainScreen = ({navigation}) => {
           style={styles.viewAllContainer}>
           <Text style={styles.endText1}>View All</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
       <FlatList
         showsVerticalScrollIndicator={false}
         // ListHeaderComponent={() => {
@@ -234,40 +229,34 @@ const MainScreen = ({navigation}) => {
         //       <View style={styles.midContainer}>
         //         <View style={styles.midView}>
         //           <Text style={styles.midText}>Top Stories</Text>
-        //           <TouchableOpacity
+        //           <Pressable
         //             onPress={() => {
         //               navigation.navigate('TopStories');
         //             }}
         //             style={styles.viewAllContainer}>
         //             <Text style={styles.endText1}>View All</Text>
-        //           </TouchableOpacity>
+        //           </Pressable>
         //         </View>
         //         <FlatList
-        //           data={story}
+        //           data={trending}
+        //           horizontal
+        //           pagingEnabled
+        //           showsHorizontalScrollIndicator={false}
         //           renderItem={({item}) => {
         //             return (
-        //               <TouchableOpacity
+        //               <Pressable
         //                 style={styles.horizontalScrollComponent}
         //                 onPress={() => {
-        //                   navigation.navigate('DetailScreen');
+        //                   navigation.navigate('DetailScreen'),
+        //                     {
+        //                       item: item,
+        //                     };
         //                 }}>
-        //                 <ImageBackground
-        //                   source={{uri: item.jetpack_featured_media_urls}}
-        //                   style={styles.horizontalComponentImage}>
-        //                   <View style={styles.horizontalComponentIcon}>
-        //                     <Icon
-        //                       name={show ? 'bookmark' : 'bookmark-outline'}
-        //                       type="ionicons"
-        //                       size={28}
-        //                       color="white"
-        //                       style={{}}
-        //                       onPress={() => {
-        //                         fillIcon();
-        //                       }}
-        //                     />
-        //                   </View>
-        //                 </ImageBackground>
-        //               </TouchableOpacity>
+        //                 <Image
+        //                   source={{uri: item.jetpack_featured_media_url}}
+        //                   style={styles.horizontalImage}
+        //                 />
+        //               </Pressable>
         //             );
         //           }}
         //         />
