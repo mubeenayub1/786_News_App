@@ -35,45 +35,25 @@ const CustomDrawer = props => {
           height: '100%',
           width: '100%',
         }}>
+        <TouchableOpacity>
+          <Text style={styles.drawerHeadingText}>Categories:-</Text>
+        </TouchableOpacity>
         <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
-          <TouchableOpacity>
-            <Text style={styles.drawerHeadingText}>Categories:</Text>
-          </TouchableOpacity>
           <View style={{width: '90%', marginHorizontal: '5%'}}>
             <DrawerItemList {...props} />
           </View>
         </ScrollView>
         <TouchableOpacity>
-          <Text style={styles.drawerHeadingText}>Favourites</Text>
+          <Text style={styles.drawerHeadingText}>Rate Us</Text>
         </TouchableOpacity>
         <TouchableOpacity>
           <Text style={styles.drawerHeadingText}>Contact Us</Text>
         </TouchableOpacity>
         <View style={{height: 30}}></View>
       </DrawerContentScrollView>
-      <View
-        style={{
-          borderTopWidth: 1,
-          borderTopColor: 'black',
-          height: '15%',
-        }}>
-        <Text
-          style={{
-            fontSize: 18,
-            fontFamily: Theme.fontFamily.regular,
-            color: 'black',
-            paddingHorizontal: 10,
-            marginTop: 10,
-          }}>
-          Also Follow us on
-        </Text>
-        <View
-          style={{
-            flexDirection: 'row',
-            marginHorizontal: '5%',
-            justifyContent: 'space-between',
-            width: '65%',
-          }}>
+      <View style={styles.footerContainer}>
+        <Text style={styles.footerText}>Also Follow us on</Text>
+        <View style={styles.footerButtonContainer}>
           <TouchableOpacity
             onPress={() => {
               Linking.openURL('https://www.youtube.com/c/786NewsOfficial');

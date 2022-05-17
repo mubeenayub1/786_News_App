@@ -52,10 +52,10 @@ const Education = ({navigation}) => {
             size={30}
             color="white"
             onPress={() => {
-              navigation.navigate('General');
+              navigation.navigate('جنرل');
             }}
           />
-          <Text style={styles.headerText}>Education</Text>
+          <Text style={styles.headerText}>تعلیم</Text>
           <Icon name="menu" type="feather" size={30} color="transparent" />
         </View>
       </View>
@@ -77,12 +77,12 @@ const Education = ({navigation}) => {
                   source={{uri: item.jetpack_featured_media_url}}
                 />
                 <View style={styles.cardtextContainer}>
-                  <Text style={styles.cardHeadingText}>
+                  <Text style={styles.cardHeadingText} numberOfLines={2}>
                     {item.title.rendered}
                   </Text>
                   <View style={styles.cardTimeContainer}>
                     <Text style={styles.timeText}>{item.date}</Text>
-                    <View style={styles.iconContainer}>
+                    {/* <View style={styles.iconContainer}>
                       <Icon
                         name="bookmark"
                         type="feather"
@@ -97,7 +97,7 @@ const Education = ({navigation}) => {
                         color="black"
                         onPress={() => {}}
                       />
-                    </View>
+                    </View> */}
                   </View>
                 </View>
               </Pressable>

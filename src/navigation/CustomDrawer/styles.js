@@ -22,9 +22,27 @@ const styles = StyleSheet.create({
   },
   drawerHeadingText: {
     fontSize: Theme.fontSizes.xmedium,
-    fontFamily: Theme.fontFamily.bold,
+    fontFamily: Theme.fontFamily.regular,
     color: Theme.colors.primaryColor,
     padding: '5%',
+  },
+  footerContainer: {
+    borderTopWidth: 1,
+    borderTopColor: 'black',
+    height: '15%',
+  },
+  footerText: {
+    fontSize: Theme.fontSizes.xmedium,
+    fontFamily: Theme.fontFamily.regular,
+    color: 'black',
+    paddingHorizontal: moderateScale(10),
+    marginTop: moderateScale(10),
+  },
+  footerButtonContainer: {
+    flexDirection: 'row',
+    marginHorizontal: '5%',
+    justifyContent: 'space-between',
+    width: '65%',
   },
 });
 export default styles;

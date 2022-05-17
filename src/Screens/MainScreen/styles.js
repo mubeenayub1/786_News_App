@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
     fontSize: Theme.fontSizes.xxmedium,
     borderColor: 'grey',
     width: '85%',
+    paddingLeft: moderateScale(20),
   },
   searchIcon: {
     width: moderateScale(45),
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
     // backgroundColor: 'red',
     width: width,
   },
-  midScrollButton: {
+  CategoryContainer: {
     height: moderateScale(45),
     width: moderateScale(90),
     backgroundColor: 'white',
@@ -70,29 +71,32 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   midScrolltext: {
-    fontSize: Theme.fontSizes.xmedium,
+    fontSize: Theme.fontSizes.xxmedium,
     color: Theme.colors.textColor,
-    fontFamily: Theme.fontFamily.medium,
+    // fontFamily: 'NotoNastaliqUrdu-Bold',
+    fontFamily: Theme.fontFamily.urdu,
   },
-  midContainer: {
-    height: moderateScale(300),
+  HorizontalComponentContainer: {
+    height: moderateScale(250),
     width: '100%',
-    flexDirection: 'column',
+    // alignItems: 'center',
+    // flexDirection: 'column',
     // backgroundColor: 'red',
   },
-  midView: {
-    width: '95%',
-    height: '25%',
+  HorzonralHeadingContainer: {
+    width: '100%',
+    height: '20%',
     alignItems: 'center',
     paddingHorizontal: '2.5%',
     flexDirection: 'row',
     // backgroundColor: 'green',
   },
-  midText: {
-    color: '#221f1f',
-    fontSize: Theme.fontSizes.xxmedium,
-    fontFamily: 'Roboto-Medium',
-    width: '80%',
+  HorzonralHeadingText: {
+    color: Theme.colors.primaryColor,
+    fontSize: Theme.fontSizes.big,
+    fontFamily: Theme.fontFamily.urdu,
+    width: '95%',
+    textDecorationLine: 'underline',
     // elevation: 5,
     // fontWeight: 'bold',
   },
@@ -118,7 +122,7 @@ const styles = StyleSheet.create({
     width: moderateScale(250),
     height: moderateScale(200),
     borderRadius: 5,
-    // resizeMode: 'contain',
+    resizeMode: 'contain',
   },
   horizontalComponentIcon: {
     height: 50,
@@ -132,22 +136,24 @@ const styles = StyleSheet.create({
 
     width: width,
   },
-  endheader: {
+  verticalComponentsheadingContainer: {
     // height: '20%',
     height: moderateScale(60),
-    width: '95%',
-    alignItems: 'center',
+    width: '100%',
+    justifyContent: 'flex-start',
+    // alignItems: 'center',
     marginHorizontal: '2.5%',
     flexDirection: 'row',
     // backgroundColor: 'red',
     // borderBottomColor: 'grey',
     // borderBottomWidth: 1,
   },
-  endText: {
-    color: '#221f1f',
-    fontSize: Theme.fontSizes.xxmedium,
-    fontFamily: Theme.fontFamily.medium,
-    width: '75%',
+  verticalComponentsheadingText: {
+    color: Theme.colors.primaryColor,
+    fontSize: Theme.fontSizes.big,
+    fontFamily: Theme.fontFamily.urdu,
+    textDecorationLine: 'underline',
+    width: '90%',
   },
   endText1: {
     color: Theme.colors.primaryColor,
@@ -172,31 +178,31 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   cardMainTextContainer: {
-    height: '30%',
+    height: '40%',
     marginHorizontal: '2.5%',
     justifyContent: 'center',
   },
   cardMainText: {
     color: Theme.colors.primaryColor,
     fontFamily: Theme.fontFamily.urdu,
+    fontSize: Theme.fontSizes.xmedium,
+  },
+  CardDetailtext: {
     fontSize: Theme.fontSizes.medium,
+    color: Theme.colors.blackColor,
+    height: '40%',
+    fontFamily: Theme.fontFamily.urdu,
   },
-  scrollText: {
-    fontSize: 16,
-    color: '#221f1f',
-    height: '50%',
-    fontFamily: 'Roboto-Regular',
+  dateText: {
+    fontSize: Theme.fontSizes.small,
+    color: Theme.colors.grayColor,
+    fontFamily: Theme.fontFamily.regular,
+    // marginRight: 10,
   },
-  scrollText1: {
-    fontSize: 14,
-    // color: '#221f1f',
-    fontFamily: 'Roboto-Regular',
-    marginRight: 10,
-  },
-  scrollImage: {
+  cardImage: {
     width: '40%',
     height: '100%',
-    borderRadius: 5,
+    borderRadius: moderateScale(5),
     resizeMode: 'contain',
   },
   cardTimeContainer: {

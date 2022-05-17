@@ -53,10 +53,10 @@ const National = ({navigation}) => {
             size={30}
             color="white"
             onPress={() => {
-              navigation.navigate('General');
+              navigation.navigate('جنرل');
             }}
           />
-          <Text style={styles.headerText}>National</Text>
+          <Text style={styles.headerText}>پاکستان</Text>
           <Icon name="menu" type="feather" size={30} color="transparent" />
         </View>
       </View>
@@ -78,7 +78,7 @@ const National = ({navigation}) => {
                   source={{uri: item.jetpack_featured_media_url}}
                 />
                 <View style={styles.cardtextContainer}>
-                  <Text style={styles.cardHeadingText}>
+                  <Text style={styles.cardHeadingText} numberOfLines={2}>
                     {item.title.rendered}
                   </Text>
                   <View style={styles.cardTimeContainer}>

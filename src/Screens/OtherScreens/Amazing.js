@@ -15,6 +15,7 @@ const {height, width} = Dimensions.get('window');
 import {Icon} from 'react-native-elements';
 import styles from './styles';
 import axios from 'axios';
+import moment from 'moment';
 
 const Amazing = ({navigation}) => {
   const [amazing, setAmazing] = useState([]);
@@ -57,10 +58,10 @@ const Amazing = ({navigation}) => {
             size={30}
             color="white"
             onPress={() => {
-              navigation.navigate('General');
+              navigation.navigate('جنرل');
             }}
           />
-          <Text style={styles.headerText}>Amazing & Wierd</Text>
+          <Text style={styles.headerText}>دلچسپ و عجیب</Text>
           <Icon name="menu" type="feather" size={30} color="transparent" />
         </View>
       </View>
@@ -82,27 +83,13 @@ const Amazing = ({navigation}) => {
                   source={{uri: item.jetpack_featured_media_url}}
                 />
                 <View style={styles.cardtextContainer}>
-                  <Text style={styles.cardHeadingText}>
+                  <Text style={styles.cardHeadingText} numberOfLines={2}>
                     {item.title.rendered}
                   </Text>
                   <View style={styles.cardTimeContainer}>
-                    <Text style={styles.timeText}>{item.date}</Text>
-                    <View style={styles.iconContainer}>
-                      <Icon
-                        name="bookmark"
-                        type="feather"
-                        size={20}
-                        color="black"
-                        onPress={() => {}}
-                      />
-                      <Icon
-                        name="share"
-                        type="entypo"
-                        size={20}
-                        color="black"
-                        onPress={() => {}}
-                      />
-                    </View>
+                    <Text style={styles.timeText}>
+                      {moment(item.date).format('lll')}
+                    </Text>
                   </View>
                 </View>
               </Pressable>

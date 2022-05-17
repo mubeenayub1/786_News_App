@@ -9,8 +9,9 @@ import {
   Image,
 } from 'react-native';
 const {height, width} = Dimensions.get('window');
+import moment from 'moment';
 import {Icon} from 'react-native-elements';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+
 import styles from './styles';
 
 const DetailScreen = ({navigation, route}) => {
@@ -51,28 +52,14 @@ const DetailScreen = ({navigation, route}) => {
           <View style={styles.textContainer}>
             <Text style={styles.headingText}>{item.title.rendered}</Text>
             <View style={styles.timeContainer}>
-              <View style={{width: '85%'}}>
-                <Text style={styles.time}> {item.date_gmt}</Text>
-              </View>
-              <View style={styles.iconContainer}>
-                <Icon
-                  name={show ? 'bookmark' : 'bookmark-outline'}
-                  type="ionicons"
-                  size={20}
-                  color="black"
-                  style={{}}
-                  onPress={() => {
-                    fillIcon();
-                  }}
-                />
-                <Icon
-                  name="share"
-                  type="entypo"
-                  size={20}
-                  color="black"
-                  onPress={() => {}}
-                />
-              </View>
+              <Text style={styles.time}>{moment(item.date).format('lll')}</Text>
+              {/* <Icon
+                name="share"
+                type="entypo"
+                size={20}
+                color="black"
+                onPress={() => {}}
+              /> */}
             </View>
           </View>
         </View>

@@ -80,6 +80,8 @@ const styles = StyleSheet.create({
   },
   timeContainer: {
     flexDirection: 'row',
+    width: '95%',
+    justifyContent: 'space-between',
     height: '25%',
     alignItems: 'flex-end',
   },

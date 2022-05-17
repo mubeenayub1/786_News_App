@@ -15,14 +15,19 @@ import axios from 'axios';
 import moment from 'moment';
 import {Icon} from 'react-native-elements';
 import styles from './styles';
-
+import Categories from './HomeComponents/Categories';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import {moderateScale} from '../../Theme/Dimensions';
+import TopStories from './HomeComponents/TopStoriesList';
 const MainScreen = ({navigation}) => {
   const [show, setShow] = useState(false);
   const fillIcon = () => {
     setShow(!show);
   };
   const [trending, Settrending] = useState([]);
-  const [date, setDate] = useState('');
+  const [filterData, setFilterData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState('');
   const [story, setStory] = useState([]);
 
   useEffect(() => {
@@ -42,33 +47,34 @@ const MainScreen = ({navigation}) => {
       let response = await axios(config);
       if (response) {
         // console.log(response);
-        console.log('success');
+        // console.log('success');
         // console.log(response.data[0]);
         Settrending(response.data);
+        setFilterData(response.data);
+        if (loading) {
+          setLoading(false);
+        }
       }
     } catch (error) {
       console.log(error);
     }
   };
-  // const TopStories = async => {
-  //   try {
-  //     var config = {
-  //       method: 'get',
-  //       url: 'http://786news.com.pk/wp-json/wp/v2/posts?categories=7318',
-  //       headers: {},
-  //     };
 
-  //     let response = await axios(config);
-  //     if (response) {
-  //       // console.log(response);
-  //       console.log('success');
-  //       // console.log(response.data[0]);
-  //       setStory(response.data);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const searchFilter = text => {
+    if (text) {
+      const newData = trending.filter(item => {
+        const itemData = item.title.rendered ? item.title.rendered : '';
+        const textData = text;
+        return itemData.indexOf(textData) > -1;
+      });
+      setSearch(text);
+      setFilterData(newData);
+    } else {
+      setSearch(text);
+      setFilterData(trending);
+    }
+  };
+
   // const datesetting = setDate(
   //   moment(trending.date).format('MMMM Do YYYY, h:mm:ss a'),
   // );
@@ -94,82 +100,27 @@ const MainScreen = ({navigation}) => {
           <Icon name="menu" type="feather" size={30} color="transparent" />
         </View>
         <View style={styles.searchContainer}>
-          <View style={styles.searchIcon}>
-            <Icon
-              name="search"
-              type="feather"
-              size={24}
-              color="grey"
-              onPress={() => {}}
-            />
-          </View>
           <TextInput
             style={styles.search}
-            placeholder="Search for News"
+            value={search}
+            placeholder="خبریں تلاش کریں۔"
             maxLength={20}
+            onChangeText={text => searchFilter(text)}
           />
-          <Icon name="menu" type="feather" size={30} color="transparent" />
+          <View style={styles.searchIcon}>
+            <Icon name="search" type="feather" size={24} color="grey" />
+          </View>
         </View>
       </View>
       {/* midScrollConatiner */}
 
       <View style={styles.midScrollConatiner}>
-        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          <TouchableOpacity
-            style={[styles.midScrollButton, {backgroundColor: '#cb0003'}]}>
-            <Text style={[styles.midScrolltext, {color: 'white'}]}>
-              General
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.midScrollButton}
-            onPress={() => {
-              navigation.navigate('Politics');
-            }}>
-            <Text style={styles.midScrolltext}>Politics</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.midScrollButton}
-            onPress={() => {
-              navigation.navigate('Sports');
-            }}>
-            <Text style={styles.midScrolltext}>Sports</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.midScrollButton}
-            onPress={() => {
-              navigation.navigate('Science');
-            }}>
-            <Text style={styles.midScrolltext}>Science</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.midScrollButton, {width: 120}]}
-            onPress={() => {
-              navigation.navigate('Entertainment');
-            }}>
-            <Text style={styles.midScrolltext}>Entertainment</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.midScrollButton, {width: 120}]}
-            onPress={() => {
-              navigation.navigate('Technology');
-            }}>
-            <Text style={styles.midScrolltext}>Technology</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.midScrollButton, {width: 120}]}
-            onPress={() => {
-              navigation.navigate('World');
-            }}>
-            <Text style={styles.midScrolltext}>World Wide</Text>
-          </TouchableOpacity>
-          <View style={{width: 20}}></View>
-        </ScrollView>
+        <Categories />
       </View>
 
       {/* Horizontal Scroll section */}
       {/* <View style={styles.midContainer}>
-        {/* <View style={styles.midView}>
+        <View style={styles.midView}>
           <Text style={styles.midText}>Top Stories</Text>
           <TouchableOpacity
             onPress={() => {
@@ -179,132 +130,264 @@ const MainScreen = ({navigation}) => {
             <Text style={styles.endText1}>View All</Text>
           </TouchableOpacity>
         </View>
+      </View> */}
+
+      {loading ? (
+        <ScrollView
+          style={{
+            flex: 1,
+          }}
+          showsVerticalScrollIndicator={false}>
+          <SkeletonPlaceholder>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                width: '95%',
+                marginTop: moderateScale(10),
+              }}>
+              <View style={{marginLeft: moderateScale(10)}}>
+                <View
+                  style={{
+                    width: moderateScale(200),
+                    height: moderateScale(55),
+                    borderRadius: 5,
+                  }}
+                />
+                <View
+                  style={{
+                    marginTop: moderateScale(10),
+                    width: moderateScale(200),
+                    height: moderateScale(55),
+                    borderRadius: 5,
+                  }}
+                />
+                <View
+                  style={{marginTop: 6, width: 80, height: 20, borderRadius: 4}}
+                />
+              </View>
+              <View
+                style={{
+                  width: moderateScale(150),
+                  height: moderateScale(150),
+                  borderRadius: 5,
+                }}
+              />
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                width: '95%',
+                marginTop: moderateScale(10),
+              }}>
+              <View style={{marginLeft: moderateScale(10)}}>
+                <View
+                  style={{
+                    width: moderateScale(200),
+                    height: moderateScale(55),
+                    borderRadius: 5,
+                  }}
+                />
+                <View
+                  style={{
+                    marginTop: moderateScale(10),
+                    width: moderateScale(200),
+                    height: moderateScale(55),
+                    borderRadius: 5,
+                  }}
+                />
+                <View
+                  style={{marginTop: 6, width: 80, height: 20, borderRadius: 4}}
+                />
+              </View>
+              <View
+                style={{
+                  width: moderateScale(150),
+                  height: moderateScale(150),
+                  borderRadius: 5,
+                }}
+              />
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                width: '95%',
+                marginTop: moderateScale(10),
+              }}>
+              <View style={{marginLeft: moderateScale(10)}}>
+                <View
+                  style={{
+                    width: moderateScale(200),
+                    height: moderateScale(55),
+                    borderRadius: 5,
+                  }}
+                />
+                <View
+                  style={{
+                    marginTop: moderateScale(10),
+                    width: moderateScale(200),
+                    height: moderateScale(55),
+                    borderRadius: 5,
+                  }}
+                />
+                <View
+                  style={{marginTop: 6, width: 80, height: 20, borderRadius: 4}}
+                />
+              </View>
+              <View
+                style={{
+                  width: moderateScale(150),
+                  height: moderateScale(150),
+                  borderRadius: 5,
+                }}
+              />
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                width: '95%',
+                marginTop: moderateScale(10),
+              }}>
+              <View style={{marginLeft: moderateScale(10)}}>
+                <View
+                  style={{
+                    width: moderateScale(200),
+                    height: moderateScale(55),
+                    borderRadius: 5,
+                  }}
+                />
+                <View
+                  style={{
+                    marginTop: moderateScale(10),
+                    width: moderateScale(200),
+                    height: moderateScale(55),
+                    borderRadius: 5,
+                  }}
+                />
+                <View
+                  style={{marginTop: 6, width: 80, height: 20, borderRadius: 4}}
+                />
+              </View>
+              <View
+                style={{
+                  width: moderateScale(150),
+                  height: moderateScale(150),
+                  borderRadius: 5,
+                }}
+              />
+            </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                width: '95%',
+                marginTop: moderateScale(10),
+              }}>
+              <View style={{marginLeft: moderateScale(10)}}>
+                <View
+                  style={{
+                    width: moderateScale(200),
+                    height: moderateScale(55),
+                    borderRadius: 5,
+                  }}
+                />
+                <View
+                  style={{
+                    marginTop: moderateScale(10),
+                    width: moderateScale(200),
+                    height: moderateScale(55),
+                    borderRadius: 5,
+                  }}
+                />
+                <View
+                  style={{marginTop: 6, width: 80, height: 20, borderRadius: 4}}
+                />
+              </View>
+              <View
+                style={{
+                  width: moderateScale(150),
+                  height: moderateScale(150),
+                  borderRadius: 5,
+                }}
+              />
+            </View>
+          </SkeletonPlaceholder>
+        </ScrollView>
+      ) : (
         <FlatList
-          data={story}
-          horizontal
-          pagingEnabled={true}
+          showsVerticalScrollIndicator={false}
+          data={filterData}
+          ListHeaderComponent={() => {
+            return (
+              <>
+                <View style={styles.HorizontalComponentContainer}>
+                  <View style={styles.HorzonralHeadingContainer}>
+                    <Text style={styles.HorzonralHeadingText}>اہم ترین</Text>
+                    {/* <Pressable
+                      onPress={() => {
+                        navigation.navigate('TopStories');
+                      }}
+                      style={styles.viewAllContainer}>
+                      <Text style={styles.endText1}>View All</Text>
+                    </Pressable> */}
+                  </View>
+                  <TopStories />
+                </View>
+                <View style={styles.verticalComponentsheadingContainer}>
+                  <Text style={styles.verticalComponentsheadingText}>
+                    اہم خبریں
+                  </Text>
+                  {/* <TouchableOpacity
+                    onPress={() => {
+                      navigation.navigate('Trending');
+                    }}
+                    style={styles.viewAllContainer}>
+                    <Text style={styles.endText1}>View All</Text>
+                  </TouchableOpacity> */}
+                </View>
+              </>
+            );
+          }}
+          nestedScrollEnabled={true}
           renderItem={({item}) => {
             return (
               <TouchableOpacity
-                style={styles.horizontalScrollComponent}
+                style={styles.VerticalScrollComponent}
                 onPress={() => {
-                  navigation.navigate('DetailScreen');
+                  navigation.navigate('DetailScreen', {
+                    item: item,
+                  });
                 }}>
-                <ImageBackground
-                  source={{uri: item.jetpack_featured_media_urls}}
-                  style={styles.horizontalComponentImage}>
-                  <View style={styles.horizontalComponentIcon}>
-                    <Icon
-                      name={show ? 'bookmark' : 'bookmark-outline'}
-                      type="ionicons"
-                      size={28}
-                      color="white"
-                      style={{}}
-                      onPress={() => {
-                        fillIcon();
-                      }}
-                    />
+                <View style={styles.cardContainer}>
+                  <View style={styles.cardMainTextContainer}>
+                    <Text style={styles.cardMainText} numberOfLines={2}>
+                      {item.title.rendered}
+                    </Text>
                   </View>
-                </ImageBackground>
+                  <Text style={styles.CardDetailtext} numberOfLines={2}>
+                    {item.content.rendered}
+                  </Text>
+                  <View style={styles.cardTimeContainer}>
+                    <Text style={styles.dateText}>
+                      {moment(item.date).format('lll')}
+                    </Text>
+                  </View>
+                </View>
+                <Image
+                  style={styles.cardImage}
+                  source={{uri: item.jetpack_featured_media_url}}
+                />
               </TouchableOpacity>
             );
           }}
-        /> */}
-      {/* </View>  */}
-      {/* <View style={styles.endheader}>
-        <Text style={styles.endText}>Trending</Text>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('Trending');
+          contentContainerStyle={{
+            paddingBottom: 20,
           }}
-          style={styles.viewAllContainer}>
-          <Text style={styles.endText1}>View All</Text>
-        </TouchableOpacity>
-      </View> */}
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        // ListHeaderComponent={() => {
-        //   return (
-        //     <>
-        //       <View style={styles.midContainer}>
-        //         <View style={styles.midView}>
-        //           <Text style={styles.midText}>Top Stories</Text>
-        //           <Pressable
-        //             onPress={() => {
-        //               navigation.navigate('TopStories');
-        //             }}
-        //             style={styles.viewAllContainer}>
-        //             <Text style={styles.endText1}>View All</Text>
-        //           </Pressable>
-        //         </View>
-        //         <FlatList
-        //           data={trending}
-        //           horizontal
-        //           pagingEnabled
-        //           showsHorizontalScrollIndicator={false}
-        //           renderItem={({item}) => {
-        //             return (
-        //               <Pressable
-        //                 style={styles.horizontalScrollComponent}
-        //                 onPress={() => {
-        //                   navigation.navigate('DetailScreen'),
-        //                     {
-        //                       item: item,
-        //                     };
-        //                 }}>
-        //                 <Image
-        //                   source={{uri: item.jetpack_featured_media_url}}
-        //                   style={styles.horizontalImage}
-        //                 />
-        //               </Pressable>
-        //             );
-        //           }}
-        //         />
-        //       </View>
-        //       <View style={styles.endheader}>
-        //         <Text style={styles.endText}>Trending</Text>
-        //         <TouchableOpacity
-        //           onPress={() => {
-        //             navigation.navigate('Trending');
-        //           }}
-        //           style={styles.viewAllContainer}>
-        //           <Text style={styles.endText1}>View All</Text>
-        //         </TouchableOpacity>
-        //       </View>
-        //     </>
-        //   );
-        // }}
-        data={trending}
-        nestedScrollEnabled={true}
-        renderItem={({item}) => {
-          return (
-            <TouchableOpacity
-              style={styles.VerticalScrollComponent}
-              onPress={() => {
-                navigation.navigate('DetailScreen', {
-                  item: item,
-                });
-              }}>
-              <View style={styles.cardContainer}>
-                <View style={styles.cardMainTextContainer}>
-                  <Text style={styles.cardMainText}>{item.title.rendered}</Text>
-                </View>
-                <Text style={styles.scrollText}>{item.content.rendered}</Text>
-                <View style={styles.cardTimeContainer}>
-                  <Text style={styles.scrollText1}>{item.date}</Text>
-                </View>
-              </View>
-              <Image
-                style={styles.scrollImage}
-                source={{uri: item.jetpack_featured_media_url}}
-              />
-            </TouchableOpacity>
-          );
-        }}
-        contentContainerStyle={{
-          paddingBottom: 20,
-        }}
-      />
+        />
+      )}
     </View>
   );
 };

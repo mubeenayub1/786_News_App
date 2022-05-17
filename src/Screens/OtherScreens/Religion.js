@@ -27,7 +27,7 @@ const Religion = ({navigation}) => {
       // var axios = require('axios');
       var config = {
         method: 'get',
-        url: 'https://786news.com.pk/wp-json/wp/v2/posts?categories=4',
+        url: 'https://786news.com.pk/wp-json/wp/v2/posts?categories=14',
         headers: {},
       };
 
@@ -52,10 +52,10 @@ const Religion = ({navigation}) => {
             size={30}
             color="white"
             onPress={() => {
-              navigation.navigate('General');
+              navigation.navigate('جنرل');
             }}
           />
-          <Text style={styles.headerText}>Religion</Text>
+          <Text style={styles.headerText}>مذہب</Text>
           <Icon name="menu" type="feather" size={30} color="transparent" />
         </View>
       </View>
@@ -77,7 +77,7 @@ const Religion = ({navigation}) => {
                   source={{uri: item.jetpack_featured_media_url}}
                 />
                 <View style={styles.cardtextContainer}>
-                  <Text style={styles.cardHeadingText}>
+                  <Text style={styles.cardHeadingText} numberOfLines={2}>
                     {item.title.rendered}
                   </Text>
                   <View style={styles.cardTimeContainer}>

@@ -24,6 +24,9 @@ import Amazing from '../Screens/OtherScreens/Amazing';
 import Cricket from '../Screens/OtherScreens/Cricket';
 import InterNational from '../Screens/OtherScreens/InterNational';
 import Food from '../Screens/OtherScreens/Food';
+import Theme from '../Theme/Theme';
+import {moderateScale} from '../Theme/Dimensions';
+import Categories from '../Screens/MainScreen/HomeComponents/Categories';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -44,68 +47,78 @@ const MainNav = () => {
           options={{headerShown: false}}
         />
         <Stack.Screen
+          name="Categories"
+          component={Categories}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
           name="DetailScreen"
           component={DetailScreen}
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="National"
+          name="قومی خبریں"
           component={National}
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="Health"
+          name="صحت"
           component={Health}
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="Religion"
+          name="مذہب"
           component={Religion}
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="Cricket"
+          name="کرکٹ"
           component={Cricket}
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="ShowBiz"
+          name="شوبز"
           component={ShowBiz}
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="Sports"
+          name="کھیل"
           component={Sports}
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="Education"
+          name="تعلیم"
           component={Education}
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="Business"
+          name="بزنس"
           component={Business}
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="Amazing"
+          name="دلچسپ و عجیب"
           component={Amazing}
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="InterNational"
+          name="عالمی خبریں"
           component={InterNational}
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="Season"
+          name="موسم"
           component={Season}
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="Food"
+          name="پکوان"
           component={Food}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="سائنس اور ٹیکنالوجی"
+          component={Science}
           options={{headerShown: false}}
         />
       </Stack.Navigator>
@@ -124,25 +137,25 @@ const MyDrawer = () => {
         drawerActiveTintColor: '#cb0003',
         drawerInactiveTintColor: 'black',
         drawerLabelStyle: {
-          marginLeft: 20,
-          fontFamily: 'Roboto-Medium',
-          fontSize: 14,
+          marginLeft: moderateScale(20),
+          fontFamily: Theme.fontFamily.urdu,
+          fontSize: Theme.fontSizes.xmedium,
         },
       }}>
-      <Drawer.Screen name="General" component={MainScreen} />
-      <Drawer.Screen name="Amazing & Wierd" component={Amazing} />
-      <Drawer.Screen name="Bussiness" component={Business} />
-      <Drawer.Screen name="Cricket" component={Cricket} />
-      <Drawer.Screen name="Education" component={Education} />
-      <Drawer.Screen name="Food & Recipes" component={Food} />
-      <Drawer.Screen name="Health" component={Health} />
-      <Drawer.Screen name="International" component={InterNational} />
-      <Drawer.Screen name="National" component={National} />
-      <Drawer.Screen name="Religion" component={Religion} />
-      <Drawer.Screen name="Science & Technology" component={Science} />
-      <Drawer.Screen name="Season" component={Season} />
-      <Drawer.Screen name="Showbiz" component={ShowBiz} />
-      <Drawer.Screen name="Sports" component={Sports} />
+      <Drawer.Screen name="جنرل" component={MainScreen} />
+      <Drawer.Screen name="دلچسپ و عجیب" component={Amazing} />
+      <Drawer.Screen name="بزنس" component={Business} />
+      <Drawer.Screen name="کرکٹ" component={Cricket} />
+      <Drawer.Screen name="تعلیم" component={Education} />
+      <Drawer.Screen name="پکوان" component={Food} />
+      <Drawer.Screen name="صحت" component={Health} />
+      <Drawer.Screen name="عالمی خبریں" component={InterNational} />
+      <Drawer.Screen name="قومی خبریں" component={National} />
+      <Drawer.Screen name="مذہب" component={Religion} />
+      <Drawer.Screen name="سائنس اور ٹیکنالوجی" component={Science} />
+      <Drawer.Screen name="موسم" component={Season} />
+      <Drawer.Screen name="شوبز" component={ShowBiz} />
+      <Drawer.Screen name="کھیل" component={Sports} />
     </Drawer.Navigator>
   );
 };

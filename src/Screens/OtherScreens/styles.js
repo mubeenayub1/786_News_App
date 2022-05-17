@@ -25,8 +25,8 @@ const styles = StyleSheet.create({
   },
   headerText: {
     color: Theme.colors.whiteColor,
-    fontSize: Theme.fontSizes.big,
-    fontFamily: Theme.fontFamily.bold,
+    fontSize: Theme.fontSizes.xbig,
+    fontFamily: Theme.fontFamily.urdu,
     alignSelf: 'center',
   },
   Container: {
@@ -49,14 +49,14 @@ const styles = StyleSheet.create({
   },
   cardImage: {
     width: '100%',
-    height: '60%',
+    height: '70%',
     borderRadius: 5,
     resizeMode: 'contain',
   },
   cardtextContainer: {
     width: '100%',
     paddingHorizontal: moderateScale(5),
-    height: '40%',
+    height: '30%',
     // marginHorizontal: '2.5%',
     overflow: 'hidden',
   },
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     fontSize: Theme.fontSizes.xmedium,
     // backgroundColor: 'red',
     color: Theme.colors.primaryColor,
-    height: '80%',
+    height: '70%',
     marginHorizontal: moderateScale(5),
     fontFamily: Theme.fontFamily.urdu,
     // marginTop: '2.5%',
