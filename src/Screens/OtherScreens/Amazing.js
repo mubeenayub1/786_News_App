@@ -76,7 +76,7 @@ const Amazing = ({navigation}) => {
               <Pressable
                 style={styles.CardContainer}
                 onPress={() => {
-                  navigation.navigate('DetailScreen');
+                  navigation.navigate('DetailScreen', {item: item});
                 }}>
                 <Image
                   style={styles.cardImage}

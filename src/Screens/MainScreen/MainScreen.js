@@ -10,15 +10,18 @@ import {
   ImageBackground,
   FlatList,
   Pressable,
+  Dimensions,
 } from 'react-native';
 import axios from 'axios';
 import moment from 'moment';
 import {Icon} from 'react-native-elements';
 import styles from './styles';
-import Categories from './HomeComponents/Categories';
+// import Categories from './HomeComponents/Categories';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import {moderateScale} from '../../Theme/Dimensions';
 import TopStories from './HomeComponents/TopStoriesList';
+import {WebView} from 'react-native-webview';
+// import RenderHtml from 'react-native-render-html';
 const MainScreen = ({navigation}) => {
   const [show, setShow] = useState(false);
   const fillIcon = () => {
@@ -75,16 +78,14 @@ const MainScreen = ({navigation}) => {
     }
   };
 
-  // const datesetting = setDate(
-  //   moment(trending.date).format('MMMM Do YYYY, h:mm:ss a'),
-  // );
-
-  // const regex = trending.content.rendered;
-  // const result = trending.content.rendered.replace(regex, '');
+  const htmlData = data => {
+    // var regex = '/<(.|\n)*?>/';
+    var regex = /(<([^>]+)>)/gi;
+    return data.replace('</p>', '\n').replace(regex, '');
+  };
 
   return (
     <View style={styles.maincontainer}>
-      {/* header section */}
       <View style={styles.headerConatiner}>
         <View style={styles.header}>
           <Icon
@@ -112,25 +113,108 @@ const MainScreen = ({navigation}) => {
           </View>
         </View>
       </View>
-      {/* midScrollConatiner */}
 
       <View style={styles.midScrollConatiner}>
-        <Categories />
-      </View>
-
-      {/* Horizontal Scroll section */}
-      {/* <View style={styles.midContainer}>
-        <View style={styles.midView}>
-          <Text style={styles.midText}>Top Stories</Text>
+        {/* <Categories /> */}
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('TopStories');
-            }}
-            style={styles.viewAllContainer}>
-            <Text style={styles.endText1}>View All</Text>
+            style={[styles.CategoryContainer, {backgroundColor: '#cb0003'}]}>
+            <Text style={[styles.midScrolltext, {color: 'white'}]}>جنرل</Text>
           </TouchableOpacity>
-        </View>
-      </View> */}
+          <TouchableOpacity
+            style={styles.CategoryContainer}
+            onPress={() => {
+              navigation.navigate('بزنس');
+            }}>
+            <Text style={styles.midScrolltext}>بزنس</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.CategoryContainer}
+            onPress={() => {
+              navigation.navigate('کرکٹ');
+            }}>
+            <Text style={styles.midScrolltext}>کرکٹ</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.CategoryContainer}
+            onPress={() => {
+              navigation.navigate('تعلیم');
+            }}>
+            <Text style={styles.midScrolltext}>تعلیم</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.CategoryContainer}
+            onPress={() => {
+              navigation.navigate('صحت');
+            }}>
+            <Text style={styles.midScrolltext}>صحت</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.CategoryContainer}
+            onPress={() => {
+              navigation.navigate('پکوان');
+            }}>
+            <Text style={styles.midScrolltext}>پکوان</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.CategoryContainer}
+            onPress={() => {
+              navigation.navigate('مذہب');
+            }}>
+            <Text style={styles.midScrolltext}>مذہب</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.CategoryContainer}
+            onPress={() => {
+              navigation.navigate('موسم');
+            }}>
+            <Text style={styles.midScrolltext}>موسم</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.CategoryContainer}
+            onPress={() => {
+              navigation.navigate('شوبز');
+            }}>
+            <Text style={styles.midScrolltext}>شوبز</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.CategoryContainer}
+            onPress={() => {
+              navigation.navigate('کھیل');
+            }}>
+            <Text style={styles.midScrolltext}>کھیل</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.CategoryContainer, {width: 120}]}
+            onPress={() => {
+              navigation.navigate('دلچسپ و عجیب');
+            }}>
+            <Text style={styles.midScrolltext}>دلچسپ و عجیب</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.CategoryContainer, {width: 120}]}
+            onPress={() => {
+              navigation.navigate('عالمی خبریں');
+            }}>
+            <Text style={styles.midScrolltext}>عالمی خبریں</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.CategoryContainer, {width: 120}]}
+            onPress={() => {
+              navigation.navigate('قومی خبریں');
+            }}>
+            <Text style={styles.midScrolltext}>قومی خبریں</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.CategoryContainer, {width: 130}]}
+            onPress={() => {
+              navigation.navigate('سائنس اور ٹیکنالوجی');
+            }}>
+            <Text style={styles.midScrolltext}>سائنس اور ٹیکنالوجی</Text>
+          </TouchableOpacity>
+          <View style={{width: 20}}></View>
+        </ScrollView>
+      </View>
 
       {loading ? (
         <ScrollView
@@ -356,6 +440,7 @@ const MainScreen = ({navigation}) => {
             return (
               <TouchableOpacity
                 style={styles.VerticalScrollComponent}
+                activeOpacity={1}
                 onPress={() => {
                   navigation.navigate('DetailScreen', {
                     item: item,
@@ -368,8 +453,22 @@ const MainScreen = ({navigation}) => {
                     </Text>
                   </View>
                   <Text style={styles.CardDetailtext} numberOfLines={2}>
-                    {item.content.rendered}
+                    {htmlData(item.content.rendered)}
                   </Text>
+                  {/* <View
+                    style={{
+                      width: '100%',
+                      height: 50,
+                      marginBottom: 12,
+                    }}>
+                    <WebView
+                      scrollEnabled={false}
+                      source={{html: htmlData(item.content.rendered)}}
+                      style={{
+
+                      }}
+                    />
+                  </View> */}
                   <View style={styles.cardTimeContainer}>
                     <Text style={styles.dateText}>
                       {moment(item.date).format('lll')}

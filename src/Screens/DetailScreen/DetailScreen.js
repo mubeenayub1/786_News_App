@@ -21,8 +21,12 @@ const DetailScreen = ({navigation, route}) => {
   const fillIcon = () => {
     setShow(!show);
   };
-  // const regex = item.content.rendered;
-  // const result = item.content.rendered.Replace(regex, '');
+
+  const htmlData = data => {
+    // var regex = '/<(.|\n)*?>/';
+    var regex = /(<([^>]+)>)/gi;
+    return data.replace('</p>', '\n').replace(regex, '');
+  };
   return (
     <View style={styles.maincontainer}>
       <StatusBar backgroundColor={'red'} barStyle="light-content" />
@@ -64,7 +68,9 @@ const DetailScreen = ({navigation, route}) => {
           </View>
         </View>
         <ScrollView contentContainerStyle={styles.detailTextContainer}>
-          <Text style={styles.detailText}>{item.content.rendered}</Text>
+          <Text style={styles.detailText}>
+            {htmlData(item.content.rendered)}
+          </Text>
         </ScrollView>
 
         {/* <View style={styles.endContainer}>

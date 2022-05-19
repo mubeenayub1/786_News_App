@@ -12,7 +12,7 @@ import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import {moderateScale} from '../../../Theme/Dimensions';
 import styles from '../styles';
 import axios from 'axios';
-const TopStories = () => {
+const TopStories = ({navigation}) => {
   const [stories, setStories] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -24,7 +24,7 @@ const TopStories = () => {
     try {
       var config = {
         method: 'get',
-        url: 'http://786news.com.pk/wp-json/wp/v2/posts?categories=6963',
+        url: 'http://786news.com.pk/wp-json/wp/v2/posts?categories=7318',
         headers: {},
       };
 
@@ -119,12 +119,13 @@ const TopStories = () => {
             return (
               <Pressable
                 style={styles.horizontalScrollComponent}
-                onPress={() => {
-                  navigation.navigate('DetailScreen'),
-                    {
-                      item: item,
-                    };
-                }}>
+                // onPress={() => {
+                //   navigation.navigate('DetailScreen'),
+                //     {
+                //       item: item,
+                //     };
+                // }}
+              >
                 <Image
                   source={{uri: item.jetpack_featured_media_url}}
                   style={styles.horizontalImage}

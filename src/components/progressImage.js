@@ -16,71 +16,18 @@ const ProgressImage = () => {
         <View
           style={{
             flexDirection: 'row',
-            justifyContent: 'space-between',
-            width: '95%',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '100%',
             marginTop: moderateScale(10),
           }}>
           <View
             style={{
-              height: moderateScale(160),
-              width: moderateScale(240),
+              height: moderateScale(245),
+              width: moderateScale(360),
+              paddingHorizontal: moderateScale(5),
               borderRadius: moderateScale(5),
-            }}></View>
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            width: '95%',
-            marginTop: moderateScale(10),
-          }}>
-          <View
-            style={{
-              height: moderateScale(160),
-              width: moderateScale(240),
-              borderRadius: moderateScale(5),
-            }}></View>
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            width: '95%',
-            marginTop: moderateScale(10),
-          }}>
-          <View
-            style={{
-              height: moderateScale(160),
-              width: moderateScale(240),
-              borderRadius: moderateScale(5),
-            }}></View>
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            width: '95%',
-            marginTop: moderateScale(10),
-          }}>
-          <View
-            style={{
-              height: moderateScale(160),
-              width: moderateScale(240),
-              borderRadius: moderateScale(5),
-            }}></View>
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            width: '95%',
-            marginTop: moderateScale(10),
-          }}>
-          <View
-            style={{
-              height: moderateScale(160),
-              width: moderateScale(240),
-              borderRadius: moderateScale(5),
+              marginLeft: moderateScale(10),
             }}></View>
         </View>
       </SkeletonPlaceholder>

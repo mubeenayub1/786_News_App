@@ -14,6 +14,7 @@ import {
 const {height, width} = Dimensions.get('window');
 import axios from 'axios';
 import {Icon} from 'react-native-elements';
+import moment from 'moment';
 import styles from './styles';
 
 const Business = ({navigation}) => {
@@ -69,7 +70,9 @@ const Business = ({navigation}) => {
               <Pressable
                 style={styles.CardContainer}
                 onPress={() => {
-                  navigation.navigate('DetailScreen');
+                  navigation.navigate('DetailScreen', {
+                    item: item,
+                  });
                 }}>
                 <Image
                   style={styles.cardImage}
@@ -80,7 +83,9 @@ const Business = ({navigation}) => {
                     {item.title.rendered}
                   </Text>
                   <View style={styles.cardTimeContainer}>
-                    <Text style={styles.timeText}>{item.date}</Text>
+                    <Text style={styles.timeText}>
+                      {moment(item.date).format('lll')}
+                    </Text>
                     {/* <View style={styles.iconContainer}>
                       <Icon
                         name="bookmark"

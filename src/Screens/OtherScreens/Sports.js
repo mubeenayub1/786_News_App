@@ -15,7 +15,7 @@ const {height, width} = Dimensions.get('window');
 import {Icon} from 'react-native-elements';
 import styles from './styles';
 import axios from 'axios';
-
+import moment from 'moment';
 const Sports = ({navigation}) => {
   const [sport, Setsport] = useState([]);
   useEffect(() => {
@@ -71,7 +71,7 @@ const Sports = ({navigation}) => {
               <Pressable
                 style={styles.CardContainer}
                 onPress={() => {
-                  navigation.navigate('DetailScreen');
+                  navigation.navigate('DetailScreen', {item: item});
                 }}>
                 <Image
                   style={styles.cardImage}
@@ -82,8 +82,10 @@ const Sports = ({navigation}) => {
                     {item.title.rendered}
                   </Text>
                   <View style={styles.cardTimeContainer}>
-                    <Text style={styles.timeText}>{item.date}</Text>
-                    <View style={styles.iconContainer}>
+                    <Text style={styles.timeText}>
+                      {moment(item.date).format('lll')}
+                    </Text>
+                    {/* <View style={styles.iconContainer}>
                       <Icon
                         name="bookmark"
                         type="feather"
@@ -98,7 +100,7 @@ const Sports = ({navigation}) => {
                         color="black"
                         onPress={() => {}}
                       />
-                    </View>
+                    </View> */}
                   </View>
                 </View>
               </Pressable>
