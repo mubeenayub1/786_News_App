@@ -86,6 +86,7 @@ const MainScreen = ({navigation}) => {
 
   return (
     <View style={styles.maincontainer}>
+      <StatusBar barStyle="light-content" backgroundColor={'#cb0003'} />
       <View style={styles.headerConatiner}>
         <View style={styles.header}>
           <Icon

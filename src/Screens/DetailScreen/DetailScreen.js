@@ -29,7 +29,7 @@ const DetailScreen = ({navigation, route}) => {
   };
   return (
     <View style={styles.maincontainer}>
-      <StatusBar backgroundColor={'red'} barStyle="light-content" />
+      <StatusBar backgroundColor={'#cb0003'} barStyle="light-content" />
       <View style={styles.headerConatiner}>
         <View style={styles.header}>
           <Icon
